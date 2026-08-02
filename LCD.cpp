@@ -27,10 +27,14 @@ LCD::LCD(uint8_t rs, uint8_t rw, uint8_t en, const uint8_t data_pins[8])
 void LCD::print_initialization_message()
 {
     std::cout << "LCD initialized with the following pins:" << std::endl;
-    std::cout << "RS: " << m_rw << std::endl;
-    std::cout << "RW: " << m_rw << std::endl;
-    std::cout << "EN: " << m_en << std::endl;
-    std::cout << "DATA PINS: " << m_data_pins << std::endl;
+    std::cout << "RS: " << unsigned(m_rs) << std::endl;
+    std::cout << "RW: " << unsigned(m_rw) << std::endl;
+    std::cout << "EN: " << unsigned(m_en) << std::endl;
+    std::cout << "DATA PINS: " << std::endl;
+    for (unsigned char m_data_pin : m_data_pins)
+    {
+        std::cout << unsigned(m_data_pin) << std::endl;
+    }
     std::cout << std::endl;
 }
 
