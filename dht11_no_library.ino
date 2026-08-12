@@ -2,10 +2,10 @@
 // Description: Reads humidity and temperature (Celsius) from a DHT11 sensor using 
 //              1-wire serial communication protocol
 // Author:      Isabella MacDonald
-// Date:        Aug 10, 2026
+// Date:        Aug 12, 2026
 
 // ---------------------------------------------------------------------
-// Process Overview:
+// Process:
 // 1. Host pulls the data line LOW for >= 18ms to say "wake up."
 // 2. Host releases the line (goes back to INPUT_PULLUP).
 // 3. Sensor responds: LOW 80us, then HIGH 80us (handshake).
@@ -13,6 +13,7 @@
 //      bit 0: ~26-28us HIGH
 //      bit 1: ~70us HIGH
 // 5. The checksum is the sum of the first 4 bytes
+// 6. Display results to serial monitor using Serial.print()
 // ---------------------------------------------------------------------
 
 const uint8_t PIN_CHOICE = 2; // digital pin the DHT11 data line is on
@@ -88,8 +89,10 @@ bool readRawBits(uint8_t data[5]) {
     // short high pulse -> bit stays 0
   }
 
-  // 4. Verify checksum: byte 4 should equal the sum of bytes 0-3.
-  uint8_t checksum = (data[0] + data[1] + data[2] + data[3]) & 0xFF;
+  // 4. verify checksum: byte 4 should equal the sum of bytes 0-3
+  // we use uint8_t to match architecture of the DHT checksum which is 1 byte
+  // only looking at the last byte
+  uint8_t checksum = (data[0] + data[1] + data[2] + data[3]);
   return checksum == data[4];
 }
 
@@ -139,3 +142,4 @@ void loop() {
   Serial.print(humidity);
   Serial.println((" %"));
 }
+
