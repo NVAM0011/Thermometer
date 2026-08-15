@@ -7,6 +7,4 @@ add_executable(Thermometer
         LCD.cpp
         LCD.h
         main.cpp
-        Serial_To_Parallel.cpp
-        Serial_To_Parallel.h
 )

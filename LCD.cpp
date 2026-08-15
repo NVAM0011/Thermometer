@@ -5,8 +5,7 @@
 #include "LCD.h"
 #include <iostream>
 #include <string>
-
-// Create class constructor, take in pins, and creates an LCD object
+// #include "Arduino.h"
 
 std::string message_sent_string = "Sent message to LCD: ";
 std::string message_failed_string = "Failed to send message to LCD: ";
@@ -48,3 +47,28 @@ void LCD::clear() const
 {
     // Clear the LCD of text
 }
+
+uint8_t LCD_Pins = 0;
+
+void LCD::shift_data_into_register(){
+    pinMode(shiftPin, HIGH);
+    shiftOut(dataPin, shiftPin, LSBFIRST, LCD_Pins);
+    pinMode(shiftPin, LOW);
+}
+
+void LCD::reset_shift_register()
+{
+    digitalWriter(resetPin, LOW);
+    delay(tDelayNanoSeconds);
+    digitalWriter(resetPin, HIGH);
+
+}
+
+void LCD::output_shift_register()
+{
+    digitalWrite(outputEnablePin, HIGH);
+}
+
+void LCD::enable_output(){}
+
+void LCD::disable_output(){}
